@@ -1,0 +1,26 @@
+{
+  "name": "files-api",
+  "version": "0.0.0",
+  "description": "RESTful json api for files",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twalker/files-api.git"
+  },
+  "author": "tim walker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twalker/files-api/issues"
+  },
+  "homepage": "https://github.com/twalker/files-api",
+  "dependencies": {
+    "express": "~3.4.8"
+  },
+  "devDependencies": {
+    "supertest": "~0.9.0",
+    "mocha": "~1.17.1"
+  }
+}
