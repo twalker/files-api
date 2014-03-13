@@ -4,7 +4,7 @@
   "description": "RESTful json api for files",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/index.js"
+    "test": "mocha --ui bdd --recursive --reporter spec --timeout 10000 --slow 300"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,14 @@
   },
   "homepage": "https://github.com/twalker/files-api",
   "dependencies": {
-    "express": "~3.4.8"
+    "express": "~3.5.0",
+    "mime": "~1.2.11",
+    "rimraf": "~2.2.6",
+    "async": "~0.2.10",
+    "multiparty": "~3.2.3",
+    "filesize": "~2.0.3",
+    "mv": "^2.0.0",
+    "speakingurl": "^0.9.0"
   },
   "devDependencies": {
     "supertest": "~0.9.0",
