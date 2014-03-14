@@ -8,7 +8,6 @@ var filesapi = require('../lib/files-api')
 var app = express();
 app.use(app.router);
 app.use(express.logger('dev'));
-//app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/files', filesapi({
   baseDir: path.join(__dirname, '/fixtures/'),
   baseUrl: '/uploads/'
@@ -64,16 +63,16 @@ describe('POST /api/files/:path', function(){
   it('should upload file(s) to existing dir when req is form post', function(done){
 
     request(app)
-      .post('/api/files/')
-      .attach('big-easy', 'test/fixtures/Big_Easy_Lofton.jpg')
+      .post('/api/files/foo/')
+      .attach('big-easy', 'test/fixtures/big-easy-lofton.jpg')
       .expect(200)
       .end(function(err, res){
         if(err) return done(err);
         assert.equal(res.body.name, 'big-easy-lofton.jpg');
-        assert.equal(res.body.url, '/uploads/big-easy-lofton.jpg');
-        fs.exists('test/fixtures/big-easy-lofton.jpg', function(exists){
+        assert.equal(res.body.url, '/uploads/foo/big-easy-lofton.jpg');
+        fs.exists('test/fixtures/foo/big-easy-lofton.jpg', function(exists){
           if(exists){
-            fs.unlink('test/fixtures/big-easy-lofton.jpg', done);
+            fs.unlink('test/fixtures/foo/big-easy-lofton.jpg', done);
           } else {
             done(new Error('File does not exist'))
           }
@@ -103,7 +102,7 @@ describe('POST /api/files/:path', function(){
       });
   });
 
-  it('should copy existing file (json.id) to :path', function(done){
+  it('should copy existing file in json.id to :path', function(done){
 
     request(app)
       .post('/api/files/foo/plaid-kitty.jpg')
@@ -124,6 +123,7 @@ describe('POST /api/files/:path', function(){
         });
       });
   });
+
 });
 
 describe('DELETE /api/files/:path', function(){
@@ -150,8 +150,8 @@ describe('PUT /api/files/:path', function(){
 
   it('should move (or rename) a file (or dir)', function(done){
     request(app)
-      .put('/api/files/plaid-kitty-renamed.jpg')
-      .send({ id: '/plaid-kitty.jpg', name: 'plaid-kitty.jpg' })
+      .put('/api/files/plaid-kitty.jpg')
+      .send({ id: '/plaid-kitty-renamed.jpg'})
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -173,8 +173,8 @@ describe('PUT /api/files/:path', function(){
 
   it('should move (or rename) a dir', function(done){
     request(app)
-      .put('/api/files/foo/bar-renamed/')
-      .send({ id: '/foo/bar/' })
+      .put('/api/files/foo/bar/')
+      .send({ id: '/foo/bar-renamed/' })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -193,5 +193,6 @@ describe('PUT /api/files/:path', function(){
         });
       });
   });
+
 });
 
