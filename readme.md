@@ -12,7 +12,7 @@ Can be mounted by an existing Express app.
       , app = express();
 
     app.use('/api/files', mockfilesapi({
-      // base directory to files to manage
+      // base directory of files to manage
       baseDir: path.join(__dirname, '/test/fixtures/'),
       // base URL to where the files are publicly available.
       // Decoupled from the api, can be fully qualified url.
@@ -49,7 +49,7 @@ Can be mounted by an existing Express app.
 ### JSON models of file/dir
 
     // File
-    // path to file/dir is relative to a 'home' directory.
+    // path to file/dir is relative to `baseDir` option.
     id: "/foo/bar/mycat.jpg"
     name: 'mycat.jpg'
     // url to serve the actual file
@@ -83,4 +83,5 @@ Can be mounted by an existing Express app.
 
 - cleanup pyramids of doom using async or Q
 - un-calcify tests, they're too brittle
+- handle errors
 - consider converting to restify or koa

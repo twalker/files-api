@@ -1,5 +1,4 @@
-var http = require('http')
-  , path = require('path')
+var path = require('path')
   , express = require('express')
   , mockfilesapi = require('./lib/files-api');
 
