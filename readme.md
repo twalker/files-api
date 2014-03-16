@@ -22,10 +22,16 @@ RESTful json server for managing file resources.
     if dir json
       creates a new dir, returns dir json
     if file json
-      copies existing file in body.id to :path
+    copies from :path to path:
+      X copies existing file in body.id to :path
 
     PUT    /:path
-    moves (or renames) a dir/file based on json value, returns file/dir json
+    move
+        destPath:
+    rename
+        name:
+
+    X moves (or renames) a dir/file based on json value, returns file/dir json
 
 
 ### JSON models

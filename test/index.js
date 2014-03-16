@@ -55,7 +55,6 @@ describe('GET /api/files/:path', function(){
       });
   });
 
-
 });
 
 describe('POST /api/files/:path', function(){
@@ -102,11 +101,11 @@ describe('POST /api/files/:path', function(){
       });
   });
 
-  it('should copy existing file in json.id to :path', function(done){
+  it('should copy existing file in json.path to :path', function(done){
 
     request(app)
       .post('/api/files/foo/plaid-kitty.jpg')
-      .send({ id: '/plaid-kitty.jpg' })
+      .send({ path: '/plaid-kitty.jpg' })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -144,14 +143,12 @@ describe('DELETE /api/files/:path', function(){
 
 });
 
-
-
 describe('PUT /api/files/:path', function(){
 
-  it('should move (or rename) a file (or dir)', function(done){
+  it('should rename a file', function(done){
     request(app)
       .put('/api/files/plaid-kitty.jpg')
-      .send({ id: '/plaid-kitty-renamed.jpg'})
+      .send({ name: 'plaid-kitty-renamed.jpg'})
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -171,10 +168,10 @@ describe('PUT /api/files/:path', function(){
       });
   });
 
-  it('should move (or rename) a dir', function(done){
+  it('should rename a dir', function(done){
     request(app)
       .put('/api/files/foo/bar/')
-      .send({ id: '/foo/bar-renamed/' })
+      .send({ name: 'bar-renamed' })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -189,6 +186,52 @@ describe('PUT /api/files/:path', function(){
             fs.rename('test/fixtures/foo/bar-renamed/', 'test/fixtures/foo/bar/', done);
           } else {
             done(new Error('Renamed dir does not exist'))
+          }
+        });
+      });
+  });
+
+  it('should move a file', function(done){
+    request(app)
+      .put('/api/files/plaid-kitty.jpg')
+      .send({ path: '/foo/'})
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if(err) return done(err);
+        assert.equal(res.body.name, 'plaid-kitty.jpg');
+        assert.equal(res.body.id, '/foo/plaid-kitty.jpg');
+        fs.exists('test/fixtures/foo/plaid-kitty.jpg', function(exists){
+          assert(exists);
+          if(exists){
+            // un-rename
+            fs.rename('test/fixtures/foo/plaid-kitty.jpg', 'test/fixtures/plaid-kitty.jpg', done);
+          } else {
+            done(new Error('Moved file does not exist'))
+          }
+        });
+      });
+  });
+
+  it('should move a dir', function(done){
+    request(app)
+      .put('/api/files/foo/bar/')
+      .send({ path: '/' })
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if(err) return done(err);
+        assert.equal(res.body.id, '/bar/');
+        assert.equal(res.body.name, 'bar');
+        fs.exists('test/fixtures/bar/', function(exists){
+          assert(exists);
+          if(exists){
+            // un-rename
+            fs.rename('test/fixtures/bar/', 'test/fixtures/foo/bar/', done);
+          } else {
+            done(new Error('Moved dir does not exist'))
           }
         });
       });
