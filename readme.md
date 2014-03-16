@@ -3,13 +3,29 @@ files-api
 
 RESTful json server for managing file resources.
 
+### Usage
+
+Can be mounted by an existing Express app.
+    
+    var express = require('express')
+      , mockfilesapi = require('./lib/files-api')
+      , app = express();
+
+    app.use('/api/files', mockfilesapi({
+      // base directory to files to manage
+      baseDir: path.join(__dirname, '/test/fixtures/'),
+      // base URL to where the files are publicly available.
+      // Decoupled from the api, can be fully qualified url.
+      baseUrl: '/uploads/'
+    }));
+
 ---------------------
 
 ### Routes
 
     GET    /:path   
     if dir
-        returns a collection of files/dir
+        returns a collection of file/dir models
     if file
         returns a file model
     
@@ -18,26 +34,22 @@ RESTful json server for managing file resources.
 
     POST   /:path
     if form post
-      uploads file(s) to existing dir, returns file json
+      uploads file(s) to existing dir at :path, returns file json
     if dir json
-      creates a new dir, returns dir json
+      creates a new dir at :path, returns dir json
     if file json
-    copies from :path to path:
-      X copies existing file in body.id to :path
+      copies existing file in json.path to :path
 
     PUT    /:path
-    move
-        destPath:
-    rename
-        name:
+    if json.path
+       moves a dir/file from :path to json.path, returns file/dir json
+    if json.name
+        renames a dir/file to json.name, returns file/dir json
 
-    X moves (or renames) a dir/file based on json value, returns file/dir json
-
-
-### JSON models
+### JSON models of file/dir
 
     // File
-    // path to file/dir is relative to organization's directory.
+    // path to file/dir is relative to a 'home' directory.
     id: "/foo/bar/mycat.jpg"
     name: 'mycat.jpg'
     // url to serve the actual file
@@ -69,5 +81,6 @@ RESTful json server for managing file resources.
 
 ## TODO
 
-- cleanup pyramids of doom
+- cleanup pyramids of doom using async or Q
 - un-calcify tests, they're too brittle
+- consider converting to restify or koa
