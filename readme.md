@@ -35,16 +35,16 @@ Can be mounted by an existing Express app.
     POST   /:path
     if form post
       uploads file(s) to existing dir at :path, returns file json
-    if dir json
+    if dir :path
       creates a new dir at :path, returns dir json
-    if file json
-      copies existing file in json.path to :path
+    if file :path
+      copies existing file specified in json.path to :path
 
     PUT    /:path
     if json.path
-       moves a dir/file from :path to json.path, returns file/dir json
+      moves a dir/file from :path to json.path, returns file/dir json
     if json.name
-        renames a dir/file to json.name, returns file/dir json
+      renames a dir/file to json.name, returns file/dir json
 
 ### JSON models of file/dir
 
