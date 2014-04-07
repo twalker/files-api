@@ -123,6 +123,26 @@ describe('POST /api/files/:path', function(){
       });
   });
 
+  it('should copy a remote file from json.url to :path with json.name as filename', function(done){
+    request(app)
+      .post('/api/files/')
+      .send({url: 'http://commons.wikimedia.org/wiki/File:Male_Moose.jpg', name: 'moose.jpg' })
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if(err) return done(err);
+        assert.equal(res.body.name, 'moose.jpg');
+        assert.equal(res.body.url, '/uploads/moose.jpg');
+        fs.exists('test/fixtures/moose.jpg', function(exists){
+          if(exists){
+            fs.unlink('test/fixtures/moose.jpg', done);
+          } else {
+            done(new Error('Remote copied file does not exist'))
+          }
+        });
+      });
+  });
 });
 
 describe('DELETE /api/files/:path', function(){
@@ -233,6 +253,29 @@ describe('PUT /api/files/:path', function(){
           } else {
             done(new Error('Moved dir does not exist'))
           }
+        });
+      });
+  });
+
+  it('should overwrite an existing file resource in :path with the remote file in json.url', function(done){
+    request(app)
+      .put('/api/files/2b-clobbered.jpg')
+      .send({url: 'http://commons.wikimedia.org/wiki/File:Male_Moose.jpg'})
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if(err) return done(err);
+        assert.equal(res.body.name, '2b-clobbered.jpg');
+        assert.equal(res.body.url, '/uploads/2b-clobbered.jpg');
+
+        fs.stat('test/fixtures/2b-clobbered.jpg', function(err, stats){
+          // if larger file size, then it must've been copied from remote location
+          assert(stats.size > 1024);
+          fs.unlink('test/fixtures/2b-clobbered.jpg', function(err){
+            fs.writeFile('test/fixtures/2b-clobbered.jpg', 'doomed image body', done);
+          });
+
         });
       });
   });
