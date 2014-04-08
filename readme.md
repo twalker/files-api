@@ -39,12 +39,19 @@ Can be mounted by an existing Express app.
       creates a new dir at :path, returns dir json
     if file :path
       copies existing file specified in json.path to :path
+    if json.url
+      creates a new file by copying file from json.url to :path with json.name for filename
 
     PUT    /:path
     if json.path
       moves a dir/file from :path to json.path, returns file/dir json
     if json.name
       renames a dir/file to json.name, returns file/dir json
+    if json.url
+      updates a file by copying from json.url to :path, returns file json
+    if json.text
+      updates a text/* file with contents in json.text, returns file json
+
 
 ### JSON models of file/dir
 

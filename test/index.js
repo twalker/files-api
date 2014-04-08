@@ -280,5 +280,23 @@ describe('PUT /api/files/:path', function(){
       });
   });
 
+  it('should overwrite an existing text/* file resource with content in json.text', function(done){
+    request(app)
+      .put('/api/files/foo/bar/touched.txt')
+      .send({text: 'Now Updated'})
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .end(function(err, res){
+        if(err) return done(err);
+        assert.equal(res.body.name, 'touched.txt');
+        fs.readFile('test/fixtures/foo/bar/touched.txt', function(err, data){
+          if(err) return done(err)
+          assert.equal(data, 'Now Updated');
+          fs.writeFile('test/fixtures/foo/bar/touched.txt', 'touched', {flags: 'w'}, done);
+        });
+      });
+  });
+
 });
 
