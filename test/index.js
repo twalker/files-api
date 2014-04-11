@@ -6,8 +6,8 @@ var filesapi = require('../lib/files-api')
   , assert = require('assert');
 
 var app = express();
-app.use(app.router);
-app.use(express.logger('dev'));
+
+app.use(require('morgan')('dev'));
 app.use('/api/files', filesapi({
   baseDir: path.join(__dirname, '/fixtures/'),
   baseUrl: '/uploads/'
