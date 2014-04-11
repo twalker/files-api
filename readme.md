@@ -5,7 +5,7 @@ RESTful json server for managing file resources.
 
 ### Usage
 
-Exprots a router that can be mounted by an Express app.
+Exports a router that can be mounted by an Express app.
     
     var express = require('express')
       , mockfilesapi = require('./lib/files-api')

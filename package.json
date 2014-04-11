@@ -1,6 +1,6 @@
 {
   "name": "files-api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "RESTful json api for files",
   "main": "index.js",
   "scripts": {
