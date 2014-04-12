@@ -15,7 +15,7 @@ Exports a router that can be mounted by an Express app.
       // base directory of files to manage
       baseDir: path.join(__dirname, '/test/fixtures/'),
       // base URL to where the files are publicly available.
-      // Decoupled from the api, can be fully qualified url.
+      // Decoupled from the api, and can be absolute.
       baseUrl: '/uploads/'
     }));
 
@@ -69,8 +69,6 @@ Exports a router that can be mounted by an Express app.
     count: null
     // last modified stamp
     mtime: '2013-08-03T20:33:11.833Z'
-    // Image dimensions are populated by client on image load
-    dimensions: '100 x 10'
 
 
     // Dir 
@@ -88,7 +86,8 @@ Exports a router that can be mounted by an Express app.
 
 ## TODO
 
+- refactor actions to be less specific to my needs
 - cleanup pyramids of doom using async or Q
 - un-calcify tests, they're too brittle
-- handle errors
+- handle errors better
 - consider converting to restify or koa
