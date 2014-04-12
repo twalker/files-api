@@ -8,12 +8,12 @@ RESTful json server for managing file resources.
 Exports a router that can be mounted by an Express app.
     
     var express = require('express')
-      , mockfilesapi = require('./lib/files-api')
+      , files = require('./lib/files-api')
       , app = express();
 
-    app.use('/api/files', mockfilesapi({
+    app.use('/api/files',files({
       // base directory of files to manage
-      baseDir: path.join(__dirname, '/test/fixtures/'),
+      baseDir: path.join(__dirname, '/public/uploads/'),
       // base URL to where the files are publicly available.
       // Decoupled from the api, and can be absolute.
       baseUrl: '/uploads/'
