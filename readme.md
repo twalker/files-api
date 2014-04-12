@@ -34,9 +34,9 @@ Exports a router that can be mounted by an Express app.
 
     POST   /:path
     if form post
-      uploads file(s) to existing dir at :path, returns file json
+      uploads file(s) to existing dir at :path
     if dir :path
-      creates a new dir at :path, returns dir json
+      creates a new dir at :path
     if file :path
       copies existing file specified in json.path to :path
     if json.url
@@ -44,14 +44,15 @@ Exports a router that can be mounted by an Express app.
 
     PUT    /:path
     if json.path
-      moves a dir/file from :path to json.path, returns file/dir json
+      moves a dir/file from :path to json.path
     if json.name
-      renames a dir/file to json.name, returns file/dir json
+      renames a dir/file to json.name
     if json.url
-      updates a file by copying from json.url to :path, returns file json
+      updates a file by copying from json.url to :path
     if json.text
-      updates a text/* file with contents in json.text, returns file json
+      updates a text/* file with contents in json.text
 
+All actions, except DELETE, return file/dir json.
 
 ### JSON models of file/dir
 
