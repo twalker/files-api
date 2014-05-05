@@ -1,6 +1,6 @@
 {
   "name": "files-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RESTful json api for files",
   "main": "index.js",
   "scripts": {
@@ -17,20 +17,20 @@
   },
   "homepage": "https://github.com/twalker/files-api",
   "dependencies": {
-    "async": "~0.7.0",
-    "body-parser": "^1.0.1",
-    "errorhandler": "^1.0.0",
-    "express": "~4.0.0",
+    "async": "~0.8.0",
+    "body-parser": "^1.0.2",
+    "errorhandler": "^1.0.1",
+    "express": "~4.1.1",
     "filesize": "~2.0.3",
     "mime": "~1.2.11",
-    "morgan": "^1.0.0",
+    "morgan": "^1.0.1",
     "multiparty": "~3.2.4",
     "mv": "^2.0.0",
     "request": "^2.34.0",
     "rimraf": "~2.2.6"
   },
   "devDependencies": {
-    "supertest": "~0.10.0",
+    "supertest": "~0.12.0",
     "mocha": "~1.18.2"
   }
 }
