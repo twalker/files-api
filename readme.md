@@ -38,13 +38,13 @@ Exports a router that can be mounted by an Express app.
     if dir :path
       creates a new dir at :path
     if file :path
-      copies existing file specified in json.path to :path
+      copies existing file specified in json.source to :path
     if json.url
       creates a new file by copying file from json.url to :path with json.name for filename
 
     PUT    /:path
-    if json.path
-      moves a dir/file from :path to json.path
+    if json.destination
+      moves a dir/file from :path to json.destination
     if json.name
       renames a dir/file to json.name
     if json.url

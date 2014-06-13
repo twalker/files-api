@@ -101,11 +101,11 @@ describe('POST /api/files/:path', function(){
       });
   });
 
-  it('should copy existing file in json.path to :path', function(done){
+  it('should copy existing file in json.source to :path', function(done){
 
     request(app)
       .post('/api/files/foo/plaid-kitty.jpg')
-      .send({ path: '/plaid-kitty.jpg' })
+      .send({ source: '/plaid-kitty.jpg' })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -211,10 +211,10 @@ describe('PUT /api/files/:path', function(){
       });
   });
 
-  it('should move a file', function(done){
+  it('should move a file to from :path to json.destination', function(done){
     request(app)
       .put('/api/files/plaid-kitty.jpg')
-      .send({ path: '/foo/'})
+      .send({ destination: '/foo/'})
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
@@ -234,10 +234,10 @@ describe('PUT /api/files/:path', function(){
       });
   });
 
-  it('should move a dir', function(done){
+  it('should move a dir from :path to json.destination', function(done){
     request(app)
       .put('/api/files/foo/bar/')
-      .send({ path: '/' })
+      .send({ destination: '/' })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .expect(200)
