@@ -8,14 +8,14 @@ RESTful json server for managing file resources.
 Exports a router that can be mounted by an Express app.
     
     var express = require('express')
-      , mockfilesapi = require('./lib/files-api')
+      , files = require('./lib/files-api')
       , app = express();
 
-    app.use('/api/files', mockfilesapi({
+    app.use('/api/files',files({
       // base directory of files to manage
-      baseDir: path.join(__dirname, '/test/fixtures/'),
+      baseDir: path.join(__dirname, '/public/uploads/'),
       // base URL to where the files are publicly available.
-      // Decoupled from the api, can be fully qualified url.
+      // Decoupled from the api, and can be absolute.
       baseUrl: '/uploads/'
     }));
 
@@ -34,9 +34,9 @@ Exports a router that can be mounted by an Express app.
 
     POST   /:path
     if form post
-      uploads file(s) to existing dir at :path, returns file json
+      uploads file(s) to existing dir at :path
     if dir :path
-      creates a new dir at :path, returns dir json
+      creates a new dir at :path
     if file :path
       copies existing file specified in json.path to :path
     if json.url
@@ -44,14 +44,15 @@ Exports a router that can be mounted by an Express app.
 
     PUT    /:path
     if json.path
-      moves a dir/file from :path to json.path, returns file/dir json
+      moves a dir/file from :path to json.path
     if json.name
-      renames a dir/file to json.name, returns file/dir json
+      renames a dir/file to json.name
     if json.url
-      updates a file by copying from json.url to :path, returns file json
+      updates a file by copying from json.url to :path
     if json.text
-      updates a text/* file with contents in json.text, returns file json
+      updates a text/* file with contents in json.text
 
+All actions, except DELETE, return file/dir json.
 
 ### JSON models of file/dir
 
@@ -69,8 +70,6 @@ Exports a router that can be mounted by an Express app.
     count: null
     // last modified stamp
     mtime: '2013-08-03T20:33:11.833Z'
-    // Image dimensions are populated by client on image load
-    dimensions: '100 x 10'
 
 
     // Dir 
@@ -88,7 +87,8 @@ Exports a router that can be mounted by an Express app.
 
 ## TODO
 
+- refactor actions to be less specific to my needs
 - cleanup pyramids of doom using async or Q
 - un-calcify tests, they're too brittle
-- handle errors
+- handle errors better
 - consider converting to restify or koa
